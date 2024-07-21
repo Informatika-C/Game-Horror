@@ -9,14 +9,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     Camera playerCamera;
 
+    bool groundedPlayer;
+
     Vector2 movementInput;
-    Vector3 processedInput;
+    bool jumpInput;
+
+    Vector3 playerVelocity;
 
     [SerializeField]
-    float moveSpeed = 5f;
+    float playerSpeed = 5f;
 
     [SerializeField]
-    float gravity = 9.81f;
+    float gravity = -15f;
+
+    [SerializeField]
+    float jumpHeight = 1.5f;
 
     CharacterController characterController;
 
@@ -25,25 +32,26 @@ public class PlayerMovement : MonoBehaviour
         movementInput = context.ReadValue<Vector2>();
     }
 
+    public void OnJump(CallbackContext context)
+    {
+        jumpInput = context.ReadValueAsButton();
+    }
+
     void Awake()
     {
+        movementInput = Vector2.zero;
+        jumpInput = false;
+
         characterController = GetComponent<CharacterController>();
     }
-
-    void Update()
-    {
-        processedInput = ProcessInputRelativeToCamera(movementInput, playerCamera);
-    }
-
-    void FixedUpdate()
-    {        
-        processedInput = moveSpeed * Time.fixedDeltaTime * processedInput;
-        processedInput = AddGravity(processedInput);
-        characterController.Move(processedInput);
-    }
-
+    
     Vector3 ProcessInputRelativeToCamera(Vector2 input, Camera camera)
     {
+        if(camera == null)
+        {
+            return input;
+        }
+
         Vector3 forward = camera.transform.forward;
         Vector3 right = camera.transform.right;
 
@@ -56,15 +64,28 @@ public class PlayerMovement : MonoBehaviour
         return processedInput;
     }
 
-    Vector3 AddGravity(Vector3 input)
+    void Update()
     {
-        if(!characterController.isGrounded){
-            input.y = -gravity * Time.fixedDeltaTime;
-        }
-        else{
-            input.y = 0;
+        groundedPlayer = characterController.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
+        {
+            playerVelocity.y = 0f;
         }
 
-        return input;
+        Vector3 move = ProcessInputRelativeToCamera(movementInput, playerCamera);
+        characterController.Move(playerSpeed * Time.deltaTime * move);
+
+        if (move != Vector3.zero)
+        {
+            gameObject.transform.forward = move;
+        }
+
+        if (jumpInput && groundedPlayer)
+        {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravity);
+        }
+
+        playerVelocity.y += gravity * Time.deltaTime;
+        characterController.Move(playerVelocity * Time.deltaTime);
     }
 }
