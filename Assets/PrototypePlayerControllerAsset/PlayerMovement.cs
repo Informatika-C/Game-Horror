@@ -75,10 +75,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = ProcessInputRelativeToCamera(movementInput, playerCamera);
         characterController.Move(playerSpeed * Time.deltaTime * move);
 
-        if (move != Vector3.zero)
-        {
-            gameObject.transform.forward = move;
-        }
+        // if (move != Vector3.zero)
+        // {
+        //     gameObject.transform.forward = move;
+        // }
 
         if (jumpInput && groundedPlayer)
         {
