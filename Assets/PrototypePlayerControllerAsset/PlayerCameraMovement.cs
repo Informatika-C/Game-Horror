@@ -9,7 +9,7 @@ public class PlayerCameraMovement : MonoBehaviour
     Transform FollowCamera;
     float lookSpeed = 10f;
     [SerializeField]
-    float verticalRotationLimit = 80f;
+    float verticalRotationLimit = 60f;
     Vector2 lookInput;
     Vector3 localRotation;
 

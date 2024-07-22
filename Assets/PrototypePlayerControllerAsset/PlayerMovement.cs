@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 movementInput;
     bool jumpInput;
+    bool crouchInput;
 
     Vector3 playerVelocity;
 
@@ -24,6 +25,12 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     float jumpHeight = 1.5f;
+
+    float originalHeight;
+    Vector3 originalCenter;
+    float crouchHeight = 1.5f;
+    float crouchCenter = -0.25f;
+    bool isCrouching = false;
 
     CharacterController characterController;
 
@@ -37,12 +44,21 @@ public class PlayerMovement : MonoBehaviour
         jumpInput = context.ReadValueAsButton();
     }
 
+    public void OnCrouch(CallbackContext context)
+    {
+        crouchInput = context.ReadValueAsButton();
+    }
+
     void Awake()
     {
+        characterController = GetComponent<CharacterController>();
+
         movementInput = Vector2.zero;
         jumpInput = false;
+        crouchInput = false;
 
-        characterController = GetComponent<CharacterController>();
+        originalHeight = characterController.height;
+        originalCenter = characterController.center;
     }
     
     Vector3 ProcessInputRelativeToCamera(Vector2 input, Camera camera)
@@ -66,6 +82,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        float processedSpeed = playerSpeed;
+        if(isCrouching) processedSpeed /= 2;
+
         groundedPlayer = characterController.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -73,12 +92,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Vector3 move = ProcessInputRelativeToCamera(movementInput, playerCamera);
-        characterController.Move(playerSpeed * Time.deltaTime * move);
-
-        // if (move != Vector3.zero)
-        // {
-        //     gameObject.transform.forward = move;
-        // }
+        characterController.Move(processedSpeed * Time.deltaTime * move);
 
         if (jumpInput && groundedPlayer)
         {
@@ -87,5 +101,45 @@ public class PlayerMovement : MonoBehaviour
 
         playerVelocity.y += gravity * Time.deltaTime;
         characterController.Move(playerVelocity * Time.deltaTime);
+
+        PlayerCrouch();
+    }
+
+    void PlayerCrouch()
+    {
+        if(crouchInput){
+            isCrouching = true;
+        }
+        else if(!crouchInput && isCrouching){
+            if(IsAllowedToStand(characterController)){
+                isCrouching = false;
+            }
+        }
+
+        if(isCrouching){
+            characterController.height = crouchHeight;
+            characterController.center = new Vector3(0, crouchCenter, 0);
+        }
+        else{
+            characterController.height = originalHeight;
+            characterController.center = originalCenter;
+        }
+    }
+
+    bool IsAllowedToStand(CharacterController characterController)
+    {
+        Vector3 center = transform.TransformPoint(characterController.center);
+        Vector3 top = center + Vector3.up * (characterController.height / 2);
+        Collider[] colliders = Physics.OverlapCapsule(center, top, characterController.radius);
+
+        foreach(Collider collider in colliders)
+        {
+            if(collider != characterController)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
