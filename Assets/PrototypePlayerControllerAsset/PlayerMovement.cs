@@ -9,8 +9,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     Camera playerCamera;
 
-    bool groundedPlayer;
-
     Vector2 movementInput = Vector2.zero;
     bool jumpInput = false;
     bool crouchInput = false;
@@ -86,12 +84,20 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerRun();
         PlayerCrouch();
+        PlayerJump();
+        PlayerMove();
 
+        playerVelocity.y += gravity * Time.deltaTime;
+        characterController.Move(playerVelocity * Time.deltaTime);
+    }
+
+    void PlayerMove()
+    {
         float processedSpeed = playerSpeed;
         if(isRunning) processedSpeed *= 2;
         else if(isCrouching) processedSpeed /= 2;
+        bool groundedPlayer = characterController.isGrounded;
 
-        groundedPlayer = characterController.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
@@ -99,23 +105,27 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = ProcessInputRelativeToCamera(movementInput, playerCamera);
         characterController.Move(processedSpeed * Time.deltaTime * move);
-
-        if (jumpInput && groundedPlayer)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravity);
-        }
-
-        playerVelocity.y += gravity * Time.deltaTime;
-        characterController.Move(playerVelocity * Time.deltaTime);
     }
 
     void PlayerRun()
     {
-        if(runInput && !isCrouching && characterController.isGrounded){
+        if( runInput && 
+            !isCrouching && 
+            characterController.isGrounded)
+        {
             isRunning = true;
         }
         else{
             isRunning = false;
+        }
+    }
+
+    void PlayerJump()
+    {
+        if (jumpInput && 
+            characterController.isGrounded)
+        {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravity);
         }
     }
 
