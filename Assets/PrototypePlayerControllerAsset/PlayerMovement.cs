@@ -11,14 +11,15 @@ public class PlayerMovement : MonoBehaviour
 
     bool groundedPlayer;
 
-    Vector2 movementInput;
-    bool jumpInput;
-    bool crouchInput;
+    Vector2 movementInput = Vector2.zero;
+    bool jumpInput = false;
+    bool crouchInput = false;
+    bool runInput = false;
 
     Vector3 playerVelocity;
 
     [SerializeField]
-    float playerSpeed = 5f;
+    float playerSpeed = 3f;
 
     [SerializeField]
     float gravity = -15f;
@@ -31,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     float crouchHeight = 1.5f;
     float crouchCenter = -0.25f;
     bool isCrouching = false;
+    bool isRunning = false;
 
     CharacterController characterController;
 
@@ -44,6 +46,11 @@ public class PlayerMovement : MonoBehaviour
         jumpInput = context.ReadValueAsButton();
     }
 
+    public void OnRun(CallbackContext context)
+    {
+        runInput = context.ReadValueAsButton();
+    }
+
     public void OnCrouch(CallbackContext context)
     {
         crouchInput = context.ReadValueAsButton();
@@ -52,11 +59,6 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
-
-        movementInput = Vector2.zero;
-        jumpInput = false;
-        crouchInput = false;
-
         originalHeight = characterController.height;
         originalCenter = characterController.center;
     }
@@ -82,8 +84,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        PlayerRun();
+        PlayerCrouch();
+
         float processedSpeed = playerSpeed;
-        if(isCrouching) processedSpeed /= 2;
+        if(isRunning) processedSpeed *= 2;
+        else if(isCrouching) processedSpeed /= 2;
 
         groundedPlayer = characterController.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
@@ -101,8 +107,16 @@ public class PlayerMovement : MonoBehaviour
 
         playerVelocity.y += gravity * Time.deltaTime;
         characterController.Move(playerVelocity * Time.deltaTime);
+    }
 
-        PlayerCrouch();
+    void PlayerRun()
+    {
+        if(runInput && !isCrouching && characterController.isGrounded){
+            isRunning = true;
+        }
+        else{
+            isRunning = false;
+        }
     }
 
     void PlayerCrouch()
