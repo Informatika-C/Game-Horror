@@ -5,24 +5,30 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerCameraMovement : MonoBehaviour
 {
-    [SerializeField]
-    Transform FollowCamera;
+    PlayerInput playerInput;
+    Transform cameraFollowPoint;
     float lookSpeed = 10f;
     [SerializeField]
     float verticalRotationLimit = 60f;
     Vector2 lookInput;
     Vector3 localRotation;
 
-    public void OnLook(CallbackContext context)
+    public void SetCameraFollowPoint(Transform cameraFollowPoint)
     {
-        lookInput = context.ReadValue<Vector2>();
+        this.cameraFollowPoint = cameraFollowPoint;
     }
 
-    void Awake()
+    void SetInputActions()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        playerInput = GetComponent<PlayerInput>();
+        playerInput.playerInputActions.Player.Look.performed += (context) => lookInput = context.ReadValue<Vector2>();
+        playerInput.playerInputActions.Player.Look.canceled += (context) => lookInput = Vector2.zero;
+    }
 
+    void Start()
+    {
+        SetInputActions();
+        
         lookInput = Vector2.zero;
         localRotation = transform.localRotation.eulerAngles;
     }
@@ -35,7 +41,7 @@ public class PlayerCameraMovement : MonoBehaviour
 
     void VerticalLook()
     {
-        Vector3 cameraRotation = FollowCamera.localRotation.eulerAngles;
+        Vector3 cameraRotation = cameraFollowPoint.localRotation.eulerAngles;
         cameraRotation.x -= lookInput.y * lookSpeed * Time.deltaTime;
         
         if(cameraRotation.x > verticalRotationLimit && cameraRotation.x < 180f)
@@ -47,7 +53,7 @@ public class PlayerCameraMovement : MonoBehaviour
             cameraRotation.x = 360f - verticalRotationLimit;
         }
 
-        FollowCamera.localRotation = Quaternion.Euler(cameraRotation);
+        cameraFollowPoint.localRotation = Quaternion.Euler(cameraRotation);
     }
 
     void HorizontalLook()

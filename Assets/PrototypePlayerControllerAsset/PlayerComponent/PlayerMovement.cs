@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    Camera playerCamera;
+    PlayerInput playerInput;
+    CinemachineVirtualCamera Camera;
 
     Vector2 movementInput = Vector2.zero;
     bool jumpInput = false;
@@ -27,49 +28,48 @@ public class PlayerMovement : MonoBehaviour
 
     float originalHeight;
     Vector3 originalCenter;
-    float crouchHeight = 1.5f;
-    float crouchCenter = -0.25f;
+    float crouchHeightOffset = -0.5f;
+    float crouchCenterOffset = -0.25f;
     bool isCrouching = false;
     bool isRunning = false;
 
     CharacterController characterController;
 
-    public void OnMove(CallbackContext context)
+    public void SetCamera(CinemachineVirtualCamera camera)
     {
-        movementInput = context.ReadValue<Vector2>();
+        Camera = camera;
     }
 
-    public void OnJump(CallbackContext context)
+    void SetInputActions()
     {
-        jumpInput = context.ReadValueAsButton();
+        playerInput = GetComponent<PlayerInput>();
+        playerInput.playerInputActions.Player.Move.performed += (context) => movementInput = context.ReadValue<Vector2>();
+        playerInput.playerInputActions.Player.Move.canceled += (context) => movementInput = Vector2.zero;
+        playerInput.playerInputActions.Player.Jump.performed += (context) => jumpInput = true;
+        playerInput.playerInputActions.Player.Jump.canceled += (context) => jumpInput = false;
+        playerInput.playerInputActions.Player.Crouch.performed += (context) => crouchInput = true;
+        playerInput.playerInputActions.Player.Crouch.canceled += (context) => crouchInput = false;
+        playerInput.playerInputActions.Player.Run.performed += (context) => runInput = true;
+        playerInput.playerInputActions.Player.Run.canceled += (context) => runInput = false;
     }
 
-    public void OnRun(CallbackContext context)
+    void Start()
     {
-        runInput = context.ReadValueAsButton();
-    }
-
-    public void OnCrouch(CallbackContext context)
-    {
-        crouchInput = context.ReadValueAsButton();
-    }
-
-    void Awake()
-    {
+        SetInputActions();
         characterController = GetComponent<CharacterController>();
         originalHeight = characterController.height;
         originalCenter = characterController.center;
     }
     
-    Vector3 ProcessInputRelativeToCamera(Vector2 input, Camera camera)
+    Vector3 ProcessInputRelativeToCamera(Vector2 input, Transform cameraTransform)
     {
-        if(camera == null)
+        if(cameraTransform == null)
         {
             return input;
         }
 
-        Vector3 forward = camera.transform.forward;
-        Vector3 right = camera.transform.right;
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.transform.right;
 
         forward.y = 0;
         right.y = 0;
@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        Vector3 move = ProcessInputRelativeToCamera(movementInput, playerCamera);
+        Vector3 move = ProcessInputRelativeToCamera(movementInput, Camera.transform);
         characterController.Move(processedSpeed * Time.deltaTime * move);
     }
 
@@ -141,8 +141,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if(isCrouching){
-            characterController.height = crouchHeight;
-            characterController.center = new Vector3(0, crouchCenter, 0);
+            characterController.height = originalHeight + crouchHeightOffset;
+            characterController.center = new Vector3(originalCenter.x, originalCenter.y + crouchCenterOffset, originalCenter.z);
         }
         else{
             characterController.height = originalHeight;
