@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
-using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -38,6 +35,11 @@ public class PlayerMovement : MonoBehaviour
     public void SetCamera(CinemachineVirtualCamera camera)
     {
         Camera = camera;
+    }
+
+    public Vector3 GetPlayerInput()
+    {
+        return movementInput;
     }
 
     void SetInputActions()
@@ -154,6 +156,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 center = transform.TransformPoint(characterController.center);
         Vector3 top = center + Vector3.up * (characterController.height / 2);
+        float offset = 0.1f;
+        top += Vector3.up * offset;
         Collider[] colliders = Physics.OverlapCapsule(center, top, characterController.radius);
 
         foreach(Collider collider in colliders)
