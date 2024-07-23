@@ -60,6 +60,21 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+--- !u!206 &6657495137819322101
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BlendTree
+  m_Childs: []
+  m_BlendParameter: PlayerX
+  m_BlendParameterY: PlayerX
+  m_MinThreshold: 0
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 1
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
 --- !u!206 &7783112167018891156
 BlendTree:
   m_ObjectHideFlags: 1
@@ -78,40 +93,104 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 911511c3c5dee3c49bdbb3ac9261319b, type: 2}
-    m_Threshold: 0.1875
-    m_Position: {x: 0, y: 1}
-    m_TimeScale: 1.3
+    m_Threshold: 0.056818184
+    m_Position: {x: 0, y: 0.5}
+    m_TimeScale: 1.5
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 911511c3c5dee3c49bdbb3ac9261319b, type: 2}
-    m_Threshold: 0.375
-    m_Position: {x: 0, y: -1}
-    m_TimeScale: -1.3
+    m_Threshold: 0.11363637
+    m_Position: {x: 0, y: -0.5}
+    m_TimeScale: -1.5
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 3dbcd5a28fe73664b960eb1bd3a3387e, type: 2}
-    m_Threshold: 0.5625
-    m_Position: {x: 1, y: 0}
-    m_TimeScale: 1.3
+    m_Threshold: 0.17045455
+    m_Position: {x: 0.5, y: 0}
+    m_TimeScale: 1.5
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 8ecfad1adc5c4e44d9ac778e51342bc0, type: 2}
-    m_Threshold: 0.75
+    m_Threshold: 0.22727273
+    m_Position: {x: -0.5, y: 0}
+    m_TimeScale: 1.5
+    m_CycleOffset: 0
+    m_DirectBlendParameter: PlayerX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 3dbcd5a28fe73664b960eb1bd3a3387e, type: 2}
+    m_Threshold: 0.2840909
+    m_Position: {x: 0.325, y: -0.325}
+    m_TimeScale: 1.5
+    m_CycleOffset: 0
+    m_DirectBlendParameter: PlayerX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 8ecfad1adc5c4e44d9ac778e51342bc0, type: 2}
+    m_Threshold: 0.3409091
+    m_Position: {x: -0.325, y: -0.325}
+    m_TimeScale: 1.5
+    m_CycleOffset: 0
+    m_DirectBlendParameter: PlayerX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: d886c96ec4c36134fba6526594371b44, type: 2}
+    m_Threshold: 0.39772725
+    m_Position: {x: 0, y: 1}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: PlayerX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: e3d807dcc15e95d4790f8cf5a8d7b068, type: 2}
+    m_Threshold: 0.45454547
+    m_Position: {x: 0, y: -1}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: PlayerX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 04cfecbeef5033e44a392f756ab51a75, type: 2}
+    m_Threshold: 0.5113636
+    m_Position: {x: 1, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: PlayerX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: a647b5a59f6611d42be06502dd30757c, type: 2}
+    m_Threshold: 0.5681818
     m_Position: {x: -1, y: 0}
-    m_TimeScale: 1.3
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: PlayerX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 04cfecbeef5033e44a392f756ab51a75, type: 2}
+    m_Threshold: 0.625
+    m_Position: {x: 0.75, y: -0.75}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: PlayerX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: a647b5a59f6611d42be06502dd30757c, type: 2}
+    m_Threshold: 0.6818182
+    m_Position: {x: -0.75, y: -0.75}
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: PlayerX
     m_Mirror: 0
   m_BlendParameter: PlayerX
   m_BlendParameterY: PlayerY
   m_MinThreshold: 0
-  m_MaxThreshold: 0.75
+  m_MaxThreshold: 0.6818182
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 2

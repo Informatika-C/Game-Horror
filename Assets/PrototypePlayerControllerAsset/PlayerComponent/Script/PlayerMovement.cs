@@ -42,6 +42,11 @@ public class PlayerMovement : MonoBehaviour
         return movementInput;
     }
 
+    public bool GetIsRunning()
+    {
+        return isRunning;
+    }
+
     void SetInputActions()
     {
         playerInput = GetComponent<PlayerInput>();

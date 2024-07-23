@@ -20,9 +20,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         float playerX = playerVelocity.x;
         float playerY = playerVelocity.y;
-
-        Debug.Log("Player X: " + playerX + " Player Y: " + playerY);
-
         animator.SetFloat(playerXHash, playerX);
         animator.SetFloat(playerYHash, playerY);
     }
