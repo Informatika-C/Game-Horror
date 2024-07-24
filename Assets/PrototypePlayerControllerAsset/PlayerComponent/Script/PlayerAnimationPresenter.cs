@@ -22,12 +22,48 @@ public class PlayerAnimationPresenter : MonoBehaviour
 
     void Update()
     {
+        LocomotionAnimation();
+        CrouchAnimation();
+        JumpAnimation();
+        FallAnimation();
+    }
+
+    void LocomotionAnimation()
+    {
         Vector2 playerInput = playerMovement.GetPlayerInput();
         bool isRunning = playerMovement.GetIsRunning();
 
         Vector2 targetInput = playerInput * (isRunning ? runSpeed : walkSpeed);
         currentInput = Vector2.Lerp(currentInput, targetInput, Time.deltaTime * transitionSpeed);
 
+        if(currentInput.magnitude < 0.01f)
+        {
+            currentInput = Vector2.zero;
+        }
+
+        if(playerMovement.GetIsJumping() || playerMovement.GetIsFalling())
+        {
+            currentInput = Vector2.zero;
+        }
+        
         playerAnimation.SetLocomotionVelocity(currentInput);
+    }
+
+    void CrouchAnimation()
+    {
+        bool isCrouch = playerMovement.GetIsCrouch();
+        playerAnimation.SetIsCrouch(isCrouch);
+    }
+
+    void JumpAnimation()
+    {
+        bool isJumping = playerMovement.GetIsJumping();
+        playerAnimation.SetIsJump(isJumping);
+    }
+
+    void FallAnimation()
+    {
+        bool isFalling = playerMovement.GetIsFalling();
+        playerAnimation.SetIsFall(isFalling);
     }
 }

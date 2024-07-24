@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     float crouchCenterOffset = -0.25f;
     bool isCrouching = false;
     bool isRunning = false;
+    bool isJumping = false;
+    bool isFalling = false;
 
     CharacterController characterController;
 
@@ -45,6 +47,21 @@ public class PlayerMovement : MonoBehaviour
     public bool GetIsRunning()
     {
         return isRunning;
+    }
+
+    public bool GetIsJumping()
+    {
+        return isJumping;
+    }
+
+    public bool GetIsFalling()
+    {
+        return isFalling;
+    }
+
+    public bool GetIsCrouch()
+    {
+        return isCrouching;
     }
 
     void SetInputActions()
@@ -95,7 +112,24 @@ public class PlayerMovement : MonoBehaviour
         PlayerMove();
 
         playerVelocity.y += gravity * Time.deltaTime;
+        if(characterController.isGrounded && playerVelocity.y < 0) playerVelocity.y = 0f;
         characterController.Move(playerVelocity * Time.deltaTime);
+
+        isJumping = CheckIsPlayerJumping();
+        isFalling = CheckIsPlayerFalling();
+        if(characterController.isGrounded) isFalling = false;
+        if(isFalling) isJumping = false;
+    }
+
+    bool CheckIsPlayerFalling()
+    {
+        float offset = 2.5f;
+        return playerVelocity.y < gravity * Time.deltaTime - offset && !characterController.isGrounded;
+    }
+
+    bool CheckIsPlayerJumping()
+    {
+        return playerVelocity.y > 0 && !characterController.isGrounded;
     }
 
     void PlayerMove()
