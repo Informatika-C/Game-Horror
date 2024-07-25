@@ -64,6 +64,11 @@ public class PlayerMovement : MonoBehaviour
         return isCrouching;
     }
 
+    public bool GetIsGrounded()
+    {
+        return characterController.isGrounded;
+    }
+
     void SetInputActions()
     {
         playerInput = GetComponent<PlayerInput>();

@@ -6,9 +6,11 @@ public class PlayerAnimation : MonoBehaviour
 {
     int playerXHash;
     int playerYHash;
+    int velocityHash;
     int isCrouchHash;
     int isJumpHash;
     int isFallHash;
+    int isGroundHash;
     Animator animator;
 
     void Start()
@@ -17,9 +19,11 @@ public class PlayerAnimation : MonoBehaviour
         
         playerXHash = Animator.StringToHash("PlayerX");
         playerYHash = Animator.StringToHash("PlayerY");
+        velocityHash = Animator.StringToHash("Velocity");
         isCrouchHash = Animator.StringToHash("IsCrouch");
         isJumpHash = Animator.StringToHash("IsJump");
         isFallHash = Animator.StringToHash("IsFall");
+        isGroundHash = Animator.StringToHash("IsGround");
     }
 
     public void SetLocomotionVelocity(Vector2 playerVelocity)
@@ -43,5 +47,15 @@ public class PlayerAnimation : MonoBehaviour
     public void SetIsFall(bool isFall)
     {
         animator.SetBool(isFallHash, isFall);
+    }
+
+    public void SetIsGround(bool isGrounded)
+    {
+        animator.SetBool(isGroundHash, isGrounded);
+    }
+
+    public void SetVelocity(float velocity)
+    {
+        animator.SetFloat(velocityHash, velocity);
     }
 }

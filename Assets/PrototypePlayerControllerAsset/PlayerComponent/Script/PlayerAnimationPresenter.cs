@@ -25,7 +25,6 @@ public class PlayerAnimationPresenter : MonoBehaviour
         LocomotionAnimation();
         CrouchAnimation();
         JumpAnimation();
-        FallAnimation();
     }
 
     void LocomotionAnimation()
@@ -47,6 +46,7 @@ public class PlayerAnimationPresenter : MonoBehaviour
         }
         
         playerAnimation.SetLocomotionVelocity(currentInput);
+        playerAnimation.SetVelocity(currentInput.magnitude);
     }
 
     void CrouchAnimation()
@@ -57,13 +57,8 @@ public class PlayerAnimationPresenter : MonoBehaviour
 
     void JumpAnimation()
     {
-        bool isJumping = playerMovement.GetIsJumping();
-        playerAnimation.SetIsJump(isJumping);
-    }
-
-    void FallAnimation()
-    {
-        bool isFalling = playerMovement.GetIsFalling();
-        playerAnimation.SetIsFall(isFalling);
+        playerAnimation.SetIsJump(playerMovement.GetIsJumping());
+        playerAnimation.SetIsFall(playerMovement.GetIsFalling());
+        playerAnimation.SetIsGround(playerMovement.GetIsGrounded());
     }
 }
