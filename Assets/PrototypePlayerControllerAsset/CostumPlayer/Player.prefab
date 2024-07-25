@@ -175,7 +175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.17976785
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
       propertyPath: m_LocalRotation.w
@@ -554,6 +554,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   verticalRotationLimit: 60
+  crouchCameraOffset: 0.5
+  transitionSpeed: 5
 --- !u!114 &8266825886310882380
 MonoBehaviour:
   m_ObjectHideFlags: 0

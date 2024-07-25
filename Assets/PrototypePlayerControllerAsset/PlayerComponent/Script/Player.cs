@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
 
         playerAnimationPresenter.SetPlayerAnimation(playerAnimation);
         playerAnimationPresenter.SetPlayerMovement(playerMovement);
+        playerCameraMovement.SetPlayerMovement(playerMovement);
 
         playerMovement.SetCamera(FPSCamera);
         playerCameraMovement.SetCameraFollowPoint(cameraFollowPoint);

@@ -4,15 +4,27 @@ public class PlayerCameraMovement : MonoBehaviour
 {
     PlayerInput playerInput;
     Transform cameraFollowPoint;
+    PlayerMovement playerMovement;
     float lookSpeed = 10f;
     [SerializeField]
     float verticalRotationLimit = 60f;
     Vector2 lookInput;
     Vector3 localRotation;
+    Vector3 originalCameraFollowPointLocalPosition;
+    [SerializeField]
+    float crouchCameraOffset = 0.5f;
+    [SerializeField]
+    public float transitionSpeed = 1f;
+    Vector3 targetCameraFollowPointLocalPosition;
 
     public void SetCameraFollowPoint(Transform cameraFollowPoint)
     {
         this.cameraFollowPoint = cameraFollowPoint;
+    }
+
+    public void SetPlayerMovement(PlayerMovement playerMovement)
+    {
+        this.playerMovement = playerMovement;
     }
 
     void SetInputActions()
@@ -28,12 +40,15 @@ public class PlayerCameraMovement : MonoBehaviour
         
         lookInput = Vector2.zero;
         localRotation = transform.localRotation.eulerAngles;
+
+        originalCameraFollowPointLocalPosition = cameraFollowPoint.localPosition;
     }
 
     void Update()
     {
         VerticalLook();
         HorizontalLook();
+        CrouchCamera();
     }
 
     void VerticalLook()
@@ -57,5 +72,27 @@ public class PlayerCameraMovement : MonoBehaviour
     {
         localRotation.y += lookInput.x * lookSpeed * Time.deltaTime;
         transform.localRotation = Quaternion.Euler(localRotation);
+    }
+
+    void CrouchCamera()
+    {
+        if(playerMovement.GetIsCrouch())
+        {
+            float yOffSet = originalCameraFollowPointLocalPosition.y - crouchCameraOffset;
+
+            targetCameraFollowPointLocalPosition = new Vector3(
+            originalCameraFollowPointLocalPosition.x,
+            yOffSet,
+            originalCameraFollowPointLocalPosition.z);
+        }
+        else if(!playerMovement.GetIsCrouch() && targetCameraFollowPointLocalPosition != originalCameraFollowPointLocalPosition)
+        {
+            targetCameraFollowPointLocalPosition = originalCameraFollowPointLocalPosition;
+        }
+
+        cameraFollowPoint.localPosition = Vector3.Lerp(
+        cameraFollowPoint.localPosition,
+        targetCameraFollowPointLocalPosition,
+        Time.deltaTime * transitionSpeed);
     }
 }
