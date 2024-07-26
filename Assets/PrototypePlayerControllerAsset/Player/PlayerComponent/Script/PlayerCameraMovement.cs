@@ -29,7 +29,7 @@ public class PlayerCameraMovement : MonoBehaviour
 
     void SetInputActions()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = InputManager.instance.playerInput;
         playerInput.playerInputActions.Player.Look.performed += (context) => lookInput = context.ReadValue<Vector2>();
         playerInput.playerInputActions.Player.Look.canceled += (context) => lookInput = Vector2.zero;
     }

@@ -370,9 +370,6 @@ PrefabInstance:
       addedObject: {fileID: 9194841142119836961}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1181178c68d4dc24ea0a1f6a3dc829eb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3148541222750662434}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1181178c68d4dc24ea0a1f6a3dc829eb, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6633919296218668789}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1181178c68d4dc24ea0a1f6a3dc829eb, type: 3}
       insertIndex: -1
@@ -514,18 +511,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &3148541222750662434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2081322576062965667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 198c8ebb6bfb0c5439fd9b674e952eda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6633919296218668789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,7 +580,6 @@ MonoBehaviour:
   FPSCamera: {fileID: 457961882166890285}
   cameraFollowPoint: {fileID: 2842346179287002070}
   cameraLookPoint: {fileID: 4193197116189186285}
-  playerInput: {fileID: 0}
   playerMovement: {fileID: 0}
   playerCameraMovement: {fileID: 0}
   playerAnimation: {fileID: 0}

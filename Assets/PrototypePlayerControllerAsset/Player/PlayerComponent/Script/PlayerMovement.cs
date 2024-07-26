@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
     void SetInputActions()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = InputManager.instance.playerInput;
         playerInput.playerInputActions.Player.Move.performed += (context) => movementInput = context.ReadValue<Vector2>();
         playerInput.playerInputActions.Player.Move.canceled += (context) => movementInput = Vector2.zero;
         playerInput.playerInputActions.Player.Jump.performed += (context) => jumpInput = true;
