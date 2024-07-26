@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerAnimationPresenter : MonoBehaviour
+public class PlayerAnimationPresenter : NetworkBehaviour
 {
     PlayerAnimation playerAnimation;
     PlayerMovement playerMovement;
@@ -22,6 +23,7 @@ public class PlayerAnimationPresenter : MonoBehaviour
 
     void Update()
     {
+        if(!IsOwner) return;
         LocomotionAnimation();
         CrouchAnimation();
         JumpAnimation();

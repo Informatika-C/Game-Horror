@@ -13,10 +13,13 @@ public class PlayerAnimation : MonoBehaviour
     int isGroundHash;
     Animator animator;
 
-    void Start()
+    public void SetAnimator(Animator animator)
     {
-        animator = GetComponent<Animator>();
-        
+        this.animator = animator;
+    }
+
+    void Awake()
+    {
         playerXHash = Animator.StringToHash("PlayerX");
         playerYHash = Animator.StringToHash("PlayerY");
         velocityHash = Animator.StringToHash("Velocity");

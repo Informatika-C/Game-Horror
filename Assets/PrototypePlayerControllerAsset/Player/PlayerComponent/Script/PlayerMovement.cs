@@ -69,9 +69,14 @@ public class PlayerMovement : MonoBehaviour
         return characterController.isGrounded;
     }
 
+    public void SetUpInput(PlayerInput playerInput)
+    {
+        this.playerInput = playerInput;
+        SetInputActions();
+    } 
+
     void SetInputActions()
     {
-        playerInput = InputManager.instance.playerInput;
         playerInput.playerInputActions.Player.Move.performed += (context) => movementInput = context.ReadValue<Vector2>();
         playerInput.playerInputActions.Player.Move.canceled += (context) => movementInput = Vector2.zero;
         playerInput.playerInputActions.Player.Jump.performed += (context) => jumpInput = true;
@@ -84,7 +89,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        SetInputActions();
         characterController = GetComponent<CharacterController>();
         originalHeight = characterController.height;
         originalCenter = characterController.center;
@@ -111,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (playerInput == null) return;
         PlayerRun();
         PlayerCrouch();
         PlayerJump();

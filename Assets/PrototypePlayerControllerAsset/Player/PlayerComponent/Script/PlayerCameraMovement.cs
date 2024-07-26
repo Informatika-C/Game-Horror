@@ -27,17 +27,23 @@ public class PlayerCameraMovement : MonoBehaviour
         this.playerMovement = playerMovement;
     }
 
+    public void SetUpInput(PlayerInput playerInput)
+    {
+        this.playerInput = playerInput;
+        SetInputActions();
+    }
+
     void SetInputActions()
     {
-        playerInput = InputManager.instance.playerInput;
         playerInput.playerInputActions.Player.Look.performed += (context) => lookInput = context.ReadValue<Vector2>();
         playerInput.playerInputActions.Player.Look.canceled += (context) => lookInput = Vector2.zero;
     }
 
     void Start()
     {
-        SetInputActions();
-        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         lookInput = Vector2.zero;
         localRotation = transform.localRotation.eulerAngles;
 
@@ -46,6 +52,7 @@ public class PlayerCameraMovement : MonoBehaviour
 
     void Update()
     {
+        if (playerInput == null) return;
         VerticalLook();
         HorizontalLook();
         CrouchCamera();
@@ -53,19 +60,17 @@ public class PlayerCameraMovement : MonoBehaviour
 
     void VerticalLook()
     {
-        Vector3 cameraRotation = cameraFollowPoint.localRotation.eulerAngles;
-        cameraRotation.x -= lookInput.y * lookSpeed * Time.deltaTime;
-        
-        if(cameraRotation.x > verticalRotationLimit && cameraRotation.x < 180f)
+        float angle = cameraFollowPoint.localRotation.eulerAngles.x;
+
+        if(angle > 180f)
         {
-            cameraRotation.x = verticalRotationLimit;
-        }
-        else if(cameraRotation.x < 360f - verticalRotationLimit && cameraRotation.x > 180f)
-        {
-            cameraRotation.x = 360f - verticalRotationLimit;
+            angle -= 360f;
         }
 
-        cameraFollowPoint.localRotation = Quaternion.Euler(cameraRotation);
+        float xRotation = -lookInput.y * lookSpeed * Time.deltaTime;
+        angle = Mathf.Clamp(angle + xRotation, -verticalRotationLimit, verticalRotationLimit);
+
+        cameraFollowPoint.localRotation = Quaternion.Euler(angle, 0, 0);
     }
 
     void HorizontalLook()
