@@ -33,6 +33,7 @@ public abstract class PlayerAbstract : NetworkBehaviour
         playerAnimation.SetAnimator(GetComponent<Animator>());
         playerAnimationPresenter.SetPlayerAnimation(playerAnimation);
         playerAnimationPresenter.SetPlayerMovement(playerMovement);
+        playerAnimationPresenter.SetPlayerCameraMovement(playerCameraMovement);
         playerCameraMovement.SetPlayerMovement(playerMovement);
 
         playerMovement.SetCamera(FPSCamera);

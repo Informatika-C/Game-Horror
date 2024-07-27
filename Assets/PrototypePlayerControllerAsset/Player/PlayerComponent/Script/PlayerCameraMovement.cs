@@ -16,6 +16,7 @@ public class PlayerCameraMovement : MonoBehaviour
     [SerializeField]
     public float transitionSpeed = 1f;
     Vector3 targetCameraFollowPointLocalPosition;
+    float cameraY;
 
     public void SetCameraFollowPoint(Transform cameraFollowPoint)
     {
@@ -25,6 +26,11 @@ public class PlayerCameraMovement : MonoBehaviour
     public void SetPlayerMovement(PlayerMovement playerMovement)
     {
         this.playerMovement = playerMovement;
+    }
+
+    public float GetCameraY()
+    {
+        return cameraY;
     }
 
     public void SetUpInput(PlayerInput playerInput)
@@ -71,6 +77,8 @@ public class PlayerCameraMovement : MonoBehaviour
         angle = Mathf.Clamp(angle + xRotation, -verticalRotationLimit, verticalRotationLimit);
 
         cameraFollowPoint.localRotation = Quaternion.Euler(angle, 0, 0);
+
+        cameraY = angle/verticalRotationLimit * -1;
     }
 
     void HorizontalLook()
