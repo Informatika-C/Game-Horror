@@ -7,5 +7,6 @@ public class PlayerAnimationPresenter : PlayerAnimationPresenterAbstract
         LocomotionAnimation();
         CrouchAnimation();
         JumpAnimation();
+        HeadAnimation();
     }
 }

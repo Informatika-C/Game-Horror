@@ -5,6 +5,10 @@ public class PlayerAnimationPresenterAbstract : NetworkBehaviour
 {
     protected PlayerAnimation playerAnimation;
     protected PlayerMovement playerMovement;
+    protected PlayerCameraMovement playerCameraMovement;
+    protected float headCrouchWeight = 0f;
+    protected float headStandWeight = 1f;
+    protected float headTransitionSpeed = 5f;
 
     float walkSpeed = 0.5f;
     float runSpeed = 1f;
@@ -19,6 +23,11 @@ public class PlayerAnimationPresenterAbstract : NetworkBehaviour
     public void SetPlayerMovement(PlayerMovement playerMovement)
     {
         this.playerMovement = playerMovement;
+    }
+
+    public void SetPlayerCameraMovement(PlayerCameraMovement playerCameraMovement)
+    {
+        this.playerCameraMovement = playerCameraMovement;
     }
 
     protected void LocomotionAnimation()
@@ -43,16 +52,36 @@ public class PlayerAnimationPresenterAbstract : NetworkBehaviour
         playerAnimation.SetVelocity(currentInput.magnitude);
     }
 
+    protected void JumpAnimation()
+    {
+        playerAnimation.SetIsJump(playerMovement.GetIsJumping());
+        playerAnimation.SetIsFall(playerMovement.GetIsFalling());
+        playerAnimation.SetIsGround(playerMovement.GetIsGrounded());
+    }
+
     protected void CrouchAnimation()
     {
         bool isCrouch = playerMovement.GetIsCrouch();
         playerAnimation.SetIsCrouch(isCrouch);
     }
 
-    protected void JumpAnimation()
+    protected void HeadAnimation()
     {
-        playerAnimation.SetIsJump(playerMovement.GetIsJumping());
-        playerAnimation.SetIsFall(playerMovement.GetIsFalling());
-        playerAnimation.SetIsGround(playerMovement.GetIsGrounded());
+        float cameraY = playerCameraMovement.GetCameraY();
+        playerAnimation.SetCameraY(cameraY);
+
+        if (playerMovement.GetIsCrouch())
+        {
+            headCrouchWeight = Mathf.Lerp(headCrouchWeight, 1f, Time.deltaTime * headTransitionSpeed);
+            headStandWeight = Mathf.Lerp(headStandWeight, 0f, Time.deltaTime * headTransitionSpeed);
+        }
+        else
+        {
+            headCrouchWeight = Mathf.Lerp(headCrouchWeight, 0f, Time.deltaTime * headTransitionSpeed);
+            headStandWeight = Mathf.Lerp(headStandWeight, 1f, Time.deltaTime * headTransitionSpeed);
+        }
+
+        playerAnimation.SetHeadCrouchWeight(headCrouchWeight);
+        playerAnimation.SetHeadStandWeight(headStandWeight);
     }
 }
