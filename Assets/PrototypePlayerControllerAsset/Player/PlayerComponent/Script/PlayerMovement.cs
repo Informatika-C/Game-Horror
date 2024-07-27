@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool CheckIsPlayerFalling()
     {
-        float offset = 2.5f;
+        float offset = 3f;
         return playerVelocity.y < gravity * Time.deltaTime - offset && !characterController.isGrounded;
     }
 
