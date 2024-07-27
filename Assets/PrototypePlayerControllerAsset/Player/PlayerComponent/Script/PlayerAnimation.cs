@@ -11,6 +11,9 @@ public class PlayerAnimation : MonoBehaviour
     int isJumpHash;
     int isFallHash;
     int isGroundHash;
+    int cameraYHash;
+    int headStandLayerIndex;
+    int headCrouchLayerIndex;
     Animator animator;
 
     public void SetAnimator(Animator animator)
@@ -18,7 +21,7 @@ public class PlayerAnimation : MonoBehaviour
         this.animator = animator;
     }
 
-    void Awake()
+    void Start()
     {
         playerXHash = Animator.StringToHash("PlayerX");
         playerYHash = Animator.StringToHash("PlayerY");
@@ -27,6 +30,9 @@ public class PlayerAnimation : MonoBehaviour
         isJumpHash = Animator.StringToHash("IsJump");
         isFallHash = Animator.StringToHash("IsFall");
         isGroundHash = Animator.StringToHash("IsGround");
+        cameraYHash = Animator.StringToHash("CameraY");
+        headStandLayerIndex = animator.GetLayerIndex("HeadStand");
+        headCrouchLayerIndex = animator.GetLayerIndex("HeadCrouch");
     }
 
     public void SetLocomotionVelocity(Vector2 playerVelocity)
@@ -60,5 +66,20 @@ public class PlayerAnimation : MonoBehaviour
     public void SetVelocity(float velocity)
     {
         animator.SetFloat(velocityHash, velocity);
+    }
+
+    public void SetCameraY(float cameraY)
+    {
+        animator.SetFloat(cameraYHash, cameraY);
+    }
+
+    public void SetHeadStandWeight(float weight)
+    {
+        animator.SetLayerWeight(headStandLayerIndex, weight);
+    }
+
+    public void SetHeadCrouchWeight(float weight)
+    {
+        animator.SetLayerWeight(headCrouchLayerIndex, weight);
     }
 }
