@@ -18,10 +18,10 @@ public class PlayerMovement : MonoBehaviour
     float playerSpeed = 3f;
 
     [SerializeField]
-    float gravity = -15f;
+    float gravity = -5f;
 
     [SerializeField]
-    float jumpHeight = 1.5f;
+    float jumpHeight = 1f;
 
     float originalHeight;
     Vector3 originalCenter;
@@ -92,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         originalHeight = characterController.height;
         originalCenter = characterController.center;
+        gravity /= 10;
+        jumpHeight *= 100;
     }
     
     Vector3 ProcessInputRelativeToCamera(Vector2 input, Transform cameraTransform)
@@ -121,25 +123,24 @@ public class PlayerMovement : MonoBehaviour
         PlayerJump();
         PlayerMove();
 
-        playerVelocity.y += gravity * Time.deltaTime;
-        if(characterController.isGrounded && playerVelocity.y < 0) playerVelocity.y = 0f;
+        playerVelocity.y += gravity;
         characterController.Move(playerVelocity * Time.deltaTime);
 
         isJumping = CheckIsPlayerJumping();
         isFalling = CheckIsPlayerFalling();
-        if(characterController.isGrounded) isFalling = false;
+        if(GetIsGrounded()) isFalling = false;
         if(isFalling) isJumping = false;
     }
 
     bool CheckIsPlayerFalling()
     {
-        float offset = 3f;
-        return playerVelocity.y < gravity * Time.deltaTime - offset && !characterController.isGrounded;
+        float offset = 5f;
+        return playerVelocity.y < gravity * Time.deltaTime - offset && !GetIsGrounded();
     }
 
     bool CheckIsPlayerJumping()
     {
-        return playerVelocity.y > 0 && !characterController.isGrounded;
+        return playerVelocity.y > 0 && !GetIsGrounded();
     }
 
     void PlayerMove()
@@ -155,7 +156,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Vector3 move = ProcessInputRelativeToCamera(movementInput, Camera.transform);
-        characterController.Move(processedSpeed * Time.deltaTime * move);
+        playerVelocity.x = move.x * processedSpeed;
+        playerVelocity.z = move.z * processedSpeed;
     }
 
     void PlayerRun()
@@ -176,7 +178,8 @@ public class PlayerMovement : MonoBehaviour
         if (jumpInput && 
             characterController.isGrounded)
         {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravity);
+            Debug.Log("Jump");
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
 

@@ -17,6 +17,10 @@ public class PlayerCameraMovement : MonoBehaviour
     public float transitionSpeed = 5f;
     Vector3 targetCameraFollowPointLocalPosition;
     float cameraY;
+    public float YsmoothTime = 0.1f;
+
+    private float targetCameraY;
+    private float cameraYVelocity;
 
     public void SetCameraFollowPoint(Transform cameraFollowPoint)
     {
@@ -78,7 +82,8 @@ public class PlayerCameraMovement : MonoBehaviour
 
         cameraFollowPoint.localRotation = Quaternion.Euler(angle, 0, 0);
 
-        cameraY = angle/verticalRotationLimit * -1;
+        targetCameraY = angle / verticalRotationLimit * -1;
+        cameraY = Mathf.SmoothDamp(cameraY, targetCameraY, ref cameraYVelocity, YsmoothTime);
     }
 
     void HorizontalLook()

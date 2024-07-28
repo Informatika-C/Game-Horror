@@ -8,5 +8,6 @@ public class PlayerAnimationPresenter : PlayerAnimationPresenterAbstract
         CrouchAnimation();
         JumpAnimation();
         HeadAnimation();
+        HandFlashAnimation();
     }
 }

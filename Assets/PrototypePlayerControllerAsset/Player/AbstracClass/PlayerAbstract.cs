@@ -20,7 +20,10 @@ public abstract class PlayerAbstract : NetworkBehaviour
     public PlayerAnimation playerAnimation;
     [HideInInspector]
     public PlayerAnimationPresenterAbstract playerAnimationPresenter;
-
+    [HideInInspector]
+    public PlayerItem playerItem;
+    [HideInInspector]
+    public Animator animator;
     protected List<SkinnedMeshRenderer> LocalHideMeshs = new List<SkinnedMeshRenderer>();
 
     void Awake()
@@ -29,8 +32,10 @@ public abstract class PlayerAbstract : NetworkBehaviour
         playerCameraMovement = GetComponent<PlayerCameraMovement>();
         playerAnimation = GetComponent<PlayerAnimation>();
         playerAnimationPresenter = GetComponent<PlayerAnimationPresenterAbstract>();
+        playerItem = GetComponent<PlayerItem>();
+        animator = GetComponent<Animator>();
 
-        playerAnimation.SetAnimator(GetComponent<Animator>());
+        playerAnimation.SetAnimator(animator);
         playerAnimationPresenter.SetPlayerAnimation(playerAnimation);
         playerAnimationPresenter.SetPlayerMovement(playerMovement);
         playerAnimationPresenter.SetPlayerCameraMovement(playerCameraMovement);

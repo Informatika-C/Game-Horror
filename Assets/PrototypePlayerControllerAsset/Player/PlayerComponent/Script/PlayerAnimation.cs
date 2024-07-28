@@ -14,6 +14,8 @@ public class PlayerAnimation : MonoBehaviour
     int cameraYHash;
     int headStandLayerIndex;
     int headCrouchLayerIndex;
+    int handFlashStandLayerIndex;
+    int handFlashCrouchLayerIndex;
     Animator animator;
 
     public void SetAnimator(Animator animator)
@@ -33,6 +35,8 @@ public class PlayerAnimation : MonoBehaviour
         cameraYHash = Animator.StringToHash("CameraY");
         headStandLayerIndex = animator.GetLayerIndex("HeadStand");
         headCrouchLayerIndex = animator.GetLayerIndex("HeadCrouch");
+        handFlashStandLayerIndex = animator.GetLayerIndex("HandFlashStand");
+        handFlashCrouchLayerIndex = animator.GetLayerIndex("HandFlashCrouch");
     }
 
     public void SetLocomotionVelocity(Vector2 playerVelocity)
@@ -81,5 +85,15 @@ public class PlayerAnimation : MonoBehaviour
     public void SetHeadCrouchWeight(float weight)
     {
         animator.SetLayerWeight(headCrouchLayerIndex, weight);
+    }
+
+    public void SetHandFlashStandWeight(float weight)
+    {
+        animator.SetLayerWeight(handFlashStandLayerIndex, weight);
+    }
+
+    public void SetHandFlashCrouchWeight(float weight)
+    {
+        animator.SetLayerWeight(handFlashCrouchLayerIndex, weight);
     }
 }

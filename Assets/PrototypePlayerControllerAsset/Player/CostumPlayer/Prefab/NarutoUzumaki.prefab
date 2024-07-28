@@ -166,7 +166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8253039501893866483, guid: d47a83dba1d1a3845a8056fa20f8a189, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.4858228
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8253039501893866483, guid: d47a83dba1d1a3845a8056fa20f8a189, type: 3}
       propertyPath: m_LocalPosition.y
@@ -238,12 +238,24 @@ PrefabInstance:
       value: CameraFollowPoint
       objectReference: {fileID: 0}
     - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.000014838763
       objectReference: {fileID: 0}
     - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.6874998
+      value: 1.6875001
       objectReference: {fileID: 0}
     - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
       propertyPath: m_LocalPosition.z
@@ -255,15 +267,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -4.5898574e-10
       objectReference: {fileID: 0}
     - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 6.8212097e-13
       objectReference: {fileID: 0}
     - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -1.0526577e-12
       objectReference: {fileID: 0}
     - target: {fileID: 2609158129537650098, guid: b88609695fc558d418a4023a7706f903, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -302,15 +314,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.32479346
+      value: -0.0029241145
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000047683716
+      value: 0.00000011920929
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.8136399
+      value: 0.9198301
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -340,6 +352,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3999240707569679348, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -259972160606440404, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -347,6 +363,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
       propertyPath: m_Name
       value: NarutoUzumaki
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782573351797891440, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
       propertyPath: m_Controller
@@ -390,6 +410,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7384761296064816884}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1638159345773358401}
   m_SourcePrefab: {fileID: 100100000, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}
 --- !u!4 &51070337622356947 stripped
 Transform:
@@ -645,8 +668,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
-  gravity: -15
-  jumpHeight: 1.5
+  gravity: -5
+  jumpHeight: 1
 --- !u!114 &48580025127133106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,6 +685,7 @@ MonoBehaviour:
   verticalRotationLimit: 60
   crouchCameraOffset: 0.5
   transitionSpeed: 5
+  YsmoothTime: 0.1
 --- !u!114 &4351730513217611023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,7 +710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1436834850
+  GlobalObjectIdHash: 2617630112
   InScenePlacedSourceGlobalObjectIdHash: 2617630112
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -726,6 +750,22 @@ MonoBehaviour:
   playerCameraMovement: {fileID: 0}
   playerAnimation: {fileID: 0}
   playerAnimationPresenter: {fileID: 0}
+  playerItem: {fileID: 0}
+  animator: {fileID: 0}
+--- !u!114 &1638159345773358401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5306752432002532361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7af95241583255449781e7633734674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placeHolderFlashlight: {fileID: 0}
+  flashlightPrefab: {fileID: 0}
 --- !u!4 &5360834484396273974 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8142028300753827730, guid: 30e930b9f30c81046953026c5ac65af9, type: 3}

@@ -1650,8 +1650,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
-  gravity: -15
-  jumpHeight: 1.5
+  gravity: -5
+  jumpHeight: 1
 --- !u!114 &2511207654074795586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1667,6 +1667,7 @@ MonoBehaviour:
   verticalRotationLimit: 60
   crouchCameraOffset: 0.5
   transitionSpeed: 5
+  YsmoothTime: 0.1
 --- !u!114 &9060501467794142737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1691,7 +1692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2825401887
+  GlobalObjectIdHash: 2478290898
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1776,6 +1777,8 @@ MonoBehaviour:
   playerCameraMovement: {fileID: 0}
   playerAnimation: {fileID: 0}
   playerAnimationPresenter: {fileID: 0}
+  playerItem: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!1 &2625524387689785042
 GameObject:
   m_ObjectHideFlags: 0

@@ -561,8 +561,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
-  gravity: -15
-  jumpHeight: 1.5
+  gravity: -5
+  jumpHeight: 1
 --- !u!114 &739139169894600317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,6 +578,7 @@ MonoBehaviour:
   verticalRotationLimit: 60
   crouchCameraOffset: 0.5
   transitionSpeed: 5
+  YsmoothTime: 0.1
 --- !u!114 &8266825886310882380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,6 +622,8 @@ MonoBehaviour:
   playerCameraMovement: {fileID: 0}
   playerAnimation: {fileID: 0}
   playerAnimationPresenter: {fileID: 0}
+  playerItem: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!114 &7591294208633702380
 MonoBehaviour:
   m_ObjectHideFlags: 0

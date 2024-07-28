@@ -9,6 +9,9 @@ public class PlayerAnimationPresenterAbstract : NetworkBehaviour
     protected float headCrouchWeight = 0f;
     protected float headStandWeight = 1f;
     protected float headTransitionSpeed = 5f;
+    protected float handFlashCrouchWeight = 0f;
+    protected float handFlashStandWeight = 1f;
+    protected float handFlashTransitionSpeed = 5f;
 
     float walkSpeed = 0.5f;
     float runSpeed = 1f;
@@ -83,5 +86,22 @@ public class PlayerAnimationPresenterAbstract : NetworkBehaviour
 
         playerAnimation.SetHeadCrouchWeight(headCrouchWeight);
         playerAnimation.SetHeadStandWeight(headStandWeight);
+    }
+
+    protected void HandFlashAnimation()
+    {
+        if (playerMovement.GetIsCrouch())
+        {
+            handFlashCrouchWeight = Mathf.Lerp(handFlashCrouchWeight, 1f, Time.deltaTime * handFlashTransitionSpeed);
+            handFlashStandWeight = Mathf.Lerp(handFlashStandWeight, 0f, Time.deltaTime * handFlashTransitionSpeed);
+        }
+        else
+        {
+            handFlashCrouchWeight = Mathf.Lerp(handFlashCrouchWeight, 0f, Time.deltaTime * handFlashTransitionSpeed);
+            handFlashStandWeight = Mathf.Lerp(handFlashStandWeight, 1f, Time.deltaTime * handFlashTransitionSpeed);
+        }
+
+        playerAnimation.SetHandFlashCrouchWeight(handFlashCrouchWeight);
+        playerAnimation.SetHandFlashStandWeight(handFlashStandWeight);
     }
 }
