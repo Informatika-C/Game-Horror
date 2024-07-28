@@ -14,7 +14,7 @@ public class PlayerCameraMovement : MonoBehaviour
     [SerializeField]
     float crouchCameraOffset = 0.5f;
     [SerializeField]
-    public float transitionSpeed = 1f;
+    public float transitionSpeed = 5f;
     Vector3 targetCameraFollowPointLocalPosition;
     float cameraY;
 

@@ -1,9 +1,13 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement)),
  RequireComponent(typeof(PlayerCameraMovement)),
  RequireComponent(typeof(PlayerAnimation)),
- RequireComponent(typeof(PlayerAnimationPresenterNetwork))]
+ RequireComponent(typeof(PlayerAnimationPresenterNetwork)),
+ RequireComponent(typeof(NetworkObject)),
+ RequireComponent(typeof(ClientNetworkTransform)),
+ RequireComponent(typeof(OwnerNetworkAnimator))]
 public class PlayerNetwork : PlayerAbstract
 {
     void UnhideLocalMeshs()
