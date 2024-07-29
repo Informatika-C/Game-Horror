@@ -6,15 +6,28 @@ public class PlayerItem : MonoBehaviour
 {
     [SerializeField]
     Transform placeHolderFlashlight;
-    [SerializeField]
-    Item flashlightPrefab;
 
-    GameObject flashlight;
+    [SerializeField]
+    Item flashlight;
+
+    [SerializeField]
+    List<Item> items = new();
+
+    public Item GetFlashlight()
+    {
+        return flashlight;
+    }
+
+    public void SetUpFlashlight()
+    {
+        if(flashlight == null) return;
+        flashlight = Instantiate(flashlight, placeHolderFlashlight.position, placeHolderFlashlight.rotation, placeHolderFlashlight);
+        flashlight.transform.localPosition = flashlight.relativePosition;
+        flashlight.transform.localEulerAngles = flashlight.relativeRotation;
+    }
 
     void Start()
     {
-        flashlight = Instantiate(flashlightPrefab.gameObject, placeHolderFlashlight.position, placeHolderFlashlight.rotation, placeHolderFlashlight);
-        flashlight.transform.localPosition = flashlightPrefab.relativePosition;
-        flashlight.transform.localEulerAngles = flashlightPrefab.relativeRotation;
+        SetUpFlashlight();
     }
 }

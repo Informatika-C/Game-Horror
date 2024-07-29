@@ -41,6 +41,8 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetLocomotionVelocity(Vector2 playerVelocity)
     {
+        if(playerXHash == 0) return;
+        if(playerYHash == 0) return;
         float playerX = playerVelocity.x;
         float playerY = playerVelocity.y;
         animator.SetFloat(playerXHash, playerX);
@@ -49,51 +51,61 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetIsCrouch(bool isCrouch)
     {
+        if(isCrouchHash == 0) return;
         animator.SetBool(isCrouchHash, isCrouch);
     }
 
     public void SetIsJump(bool isJump)
     {
+        if(isJumpHash == 0) return;
         animator.SetBool(isJumpHash, isJump);
     }
 
     public void SetIsFall(bool isFall)
     {
+        if(isFallHash == 0) return;
         animator.SetBool(isFallHash, isFall);
     }
 
     public void SetIsGround(bool isGrounded)
     {
+        if(isGroundHash == 0) return;
         animator.SetBool(isGroundHash, isGrounded);
     }
 
     public void SetVelocity(float velocity)
     {
+        if(velocityHash == 0) return;
         animator.SetFloat(velocityHash, velocity);
     }
 
     public void SetCameraY(float cameraY)
     {
+        if(cameraYHash == 0) return;
         animator.SetFloat(cameraYHash, cameraY);
     }
 
     public void SetHeadStandWeight(float weight)
     {
+        if(headStandLayerIndex == 0) return;
         animator.SetLayerWeight(headStandLayerIndex, weight);
     }
 
     public void SetHeadCrouchWeight(float weight)
     {
+        if(headCrouchLayerIndex == 0) return;
         animator.SetLayerWeight(headCrouchLayerIndex, weight);
     }
 
     public void SetHandFlashStandWeight(float weight)
     {
+        if(handFlashStandLayerIndex == 0) return;
         animator.SetLayerWeight(handFlashStandLayerIndex, weight);
     }
 
     public void SetHandFlashCrouchWeight(float weight)
     {
+        if(handFlashCrouchLayerIndex == 0) return;
         animator.SetLayerWeight(handFlashCrouchLayerIndex, weight);
     }
 }

@@ -978,6 +978,37 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000008158851, y: -0.0027174228, z: 0.00032259594}
     m_Extent: {x: 0.010426784, y: 0.009412052, z: 0.0031417538}
   m_DirtyAABB: 0
+--- !u!1 &1738330638726999843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8752028097320097156}
+  m_Layer: 0
+  m_Name: FlashPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8752028097320097156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738330638726999843}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.010995757, y: 0.010995757, z: 0.010995757}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2241879069547233674}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1792624733459995133
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,7 +1430,7 @@ Transform:
   m_GameObject: {fileID: 2278051510443464646}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.6874998, z: 0.32645893}
+  m_LocalPosition: {x: 0.132, y: 1.822, z: 0.254}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1554,6 +1585,8 @@ GameObject:
   - component: {fileID: 4514983803525357803}
   - component: {fileID: 8995780496078629993}
   - component: {fileID: 8033561149605283441}
+  - component: {fileID: 252153529913204953}
+  - component: {fileID: 2529111691399493468}
   m_Layer: 0
   m_Name: MadaraMultiplayer
   m_TagString: Untagged
@@ -1692,7 +1725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2478290898
+  GlobalObjectIdHash: 2274752910
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1777,8 +1810,36 @@ MonoBehaviour:
   playerCameraMovement: {fileID: 0}
   playerAnimation: {fileID: 0}
   playerAnimationPresenter: {fileID: 0}
+  playerStat: {fileID: 0}
   playerItem: {fileID: 0}
   animator: {fileID: 0}
+--- !u!114 &252153529913204953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618878460785314129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7af95241583255449781e7633734674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placeHolderFlashlight: {fileID: 8752028097320097156}
+  flashlight: {fileID: 8208299343564121493, guid: 2bba3f593a23bd74d870ecb58a2fb3ab, type: 3}
+  items: []
+--- !u!114 &2529111691399493468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618878460785314129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dcf469cfdf8cbd4aa71bd99fbe72af8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2625524387689785042
 GameObject:
   m_ObjectHideFlags: 0
@@ -3906,6 +3967,7 @@ Transform:
   - {fileID: 6568129177369715864}
   - {fileID: 4059989799818461405}
   - {fileID: 3448740311851310972}
+  - {fileID: 8752028097320097156}
   m_Father: {fileID: 6831986693072881253}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8715230056115763711

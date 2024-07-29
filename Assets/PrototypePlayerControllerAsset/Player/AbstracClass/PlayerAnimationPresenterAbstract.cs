@@ -6,6 +6,7 @@ public class PlayerAnimationPresenterAbstract : NetworkBehaviour
     protected PlayerAnimation playerAnimation;
     protected PlayerMovement playerMovement;
     protected PlayerCameraMovement playerCameraMovement;
+    protected PlayerItem playerItem;
     protected float headCrouchWeight = 0f;
     protected float headStandWeight = 1f;
     protected float headTransitionSpeed = 5f;
@@ -13,10 +14,15 @@ public class PlayerAnimationPresenterAbstract : NetworkBehaviour
     protected float handFlashStandWeight = 1f;
     protected float handFlashTransitionSpeed = 5f;
 
-    float walkSpeed = 0.5f;
-    float runSpeed = 1f;
-    float transitionSpeed = 5f;
+    readonly float walkSpeed = 0.5f;
+    readonly float runSpeed = 1f;
+    readonly float transitionSpeed = 5f;
     Vector2 currentInput = Vector2.zero;
+
+    public void SetPlayerItem(PlayerItem playerItem)
+    {
+        this.playerItem = playerItem;
+    }
 
     public void SetPlayerAnimation(PlayerAnimation playerAnimation)
     {
@@ -90,16 +96,25 @@ public class PlayerAnimationPresenterAbstract : NetworkBehaviour
 
     protected void HandFlashAnimation()
     {
-        if (playerMovement.GetIsCrouch())
+        float handFlashCrouchWeightTarget = 0f;
+        float handFlashStandWeightTarget = 0f;
+
+        if(playerItem.GetFlashlight())
         {
-            handFlashCrouchWeight = Mathf.Lerp(handFlashCrouchWeight, 1f, Time.deltaTime * handFlashTransitionSpeed);
-            handFlashStandWeight = Mathf.Lerp(handFlashStandWeight, 0f, Time.deltaTime * handFlashTransitionSpeed);
+            if(playerMovement.GetIsCrouch())
+            {
+                handFlashStandWeightTarget = 0f;
+                handFlashCrouchWeightTarget = 1f;
+            }
+            else
+            {
+                handFlashStandWeightTarget = 1f;
+                handFlashCrouchWeightTarget = 0f;
+            }
         }
-        else
-        {
-            handFlashCrouchWeight = Mathf.Lerp(handFlashCrouchWeight, 0f, Time.deltaTime * handFlashTransitionSpeed);
-            handFlashStandWeight = Mathf.Lerp(handFlashStandWeight, 1f, Time.deltaTime * handFlashTransitionSpeed);
-        }
+
+        handFlashCrouchWeight = Mathf.Lerp(handFlashCrouchWeight, handFlashCrouchWeightTarget, Time.deltaTime * handFlashTransitionSpeed);
+        handFlashStandWeight = Mathf.Lerp(handFlashStandWeight, handFlashStandWeightTarget, Time.deltaTime * handFlashTransitionSpeed);
 
         playerAnimation.SetHandFlashCrouchWeight(handFlashCrouchWeight);
         playerAnimation.SetHandFlashStandWeight(handFlashStandWeight);

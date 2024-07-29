@@ -13,5 +13,6 @@ public class PlayerAnimationPresenterNetwork : PlayerAnimationPresenterAbstract
         CrouchAnimation();
         JumpAnimation();
         HeadAnimation();
+        HandFlashAnimation();
     }
 }

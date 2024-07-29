@@ -1,10 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMovement)),
- RequireComponent(typeof(PlayerItem)),
- RequireComponent(typeof(PlayerCameraMovement)),
- RequireComponent(typeof(PlayerAnimation)),
- RequireComponent(typeof(PlayerAnimationPresenter))]
+[RequireComponent(typeof(PlayerAnimationPresenter))]
 public class Player : PlayerAbstract
 {
     void Start()
@@ -13,5 +9,9 @@ public class Player : PlayerAbstract
         playerMovement.SetUpInput(InputManager.instance.playerInput);
         playerCameraMovement.SetUpInput(InputManager.instance.playerInput);
         animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+        foreach (var mesh in skinnedMeshes)
+        {
+            mesh.updateWhenOffscreen = true;
+        }
     }   
 }

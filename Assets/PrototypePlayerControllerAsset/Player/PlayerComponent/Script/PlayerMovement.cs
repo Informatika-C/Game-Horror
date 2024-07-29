@@ -25,8 +25,8 @@ public class PlayerMovement : MonoBehaviour
 
     float originalHeight;
     Vector3 originalCenter;
-    float crouchHeightOffset = -0.5f;
-    float crouchCenterOffset = -0.25f;
+    readonly float crouchHeightOffset = -0.5f;
+    readonly float crouchCenterOffset = -0.25f;
     bool isCrouching = false;
     bool isRunning = false;
     bool isJumping = false;
@@ -73,7 +73,27 @@ public class PlayerMovement : MonoBehaviour
     {
         this.playerInput = playerInput;
         SetInputActions();
-    } 
+    }
+
+    public void SetIsRunning(bool isRunning)
+    {
+        this.isRunning = isRunning;
+    }
+
+    public void SetIsCrouch(bool isCrouching)
+    {
+        this.isCrouching = isCrouching;
+    }
+
+    public void SetIsJump(bool isJumping)
+    {
+        this.isJumping =  isJumping;
+    }
+
+    public void SetIsFall(bool isFalling)
+    {
+        this.isFalling = isFalling;
+    }
 
     void SetInputActions()
     {
@@ -126,10 +146,10 @@ public class PlayerMovement : MonoBehaviour
         playerVelocity.y += gravity;
         characterController.Move(playerVelocity * Time.deltaTime);
 
-        isJumping = CheckIsPlayerJumping();
-        isFalling = CheckIsPlayerFalling();
-        if(GetIsGrounded()) isFalling = false;
-        if(isFalling) isJumping = false;
+        SetIsJump(CheckIsPlayerJumping());
+        SetIsFall(CheckIsPlayerFalling());
+        if(GetIsGrounded()) SetIsFall(false);
+        if(isFalling) SetIsJump(false);
     }
 
     bool CheckIsPlayerFalling()
@@ -178,19 +198,19 @@ public class PlayerMovement : MonoBehaviour
         if (jumpInput && 
             characterController.isGrounded)
         {
-            Debug.Log("Jump");
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
 
     void PlayerCrouch()
     {
-        if(crouchInput){
-            isCrouching = true;
+        if(crouchInput & GetIsGrounded())
+        {
+            SetIsCrouch(true);
         }
         else if(!crouchInput && isCrouching){
             if(IsAllowedToStand(characterController)){
-                isCrouching = false;
+                SetIsCrouch(false);
             }
         }
 

@@ -1,10 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMovement)),
- RequireComponent(typeof(PlayerCameraMovement)),
- RequireComponent(typeof(PlayerAnimation)),
- RequireComponent(typeof(PlayerAnimationPresenterNetwork)),
+[RequireComponent(typeof(PlayerAnimationPresenterNetwork)),
  RequireComponent(typeof(NetworkObject)),
  RequireComponent(typeof(ClientNetworkTransform)),
  RequireComponent(typeof(OwnerNetworkAnimator))]
@@ -25,6 +22,11 @@ public class PlayerNetwork : PlayerAbstract
             FPSCamera.enabled = true;
             playerMovement.SetUpInput(InputManager.instance.playerInput);
             playerCameraMovement.SetUpInput(InputManager.instance.playerInput);
+            animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            foreach (var mesh in skinnedMeshes)
+            {
+                mesh.updateWhenOffscreen = true;
+            }
         }
         else if (!IsOwner)
         {

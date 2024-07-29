@@ -179,5 +179,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c5ed8b01bf03c41802d2ce00dfce87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  relativePosition: {x: 0.075, y: -0.011, z: 0.01}
+  relativePosition: {x: 0.0375502, y: 0.1311988, z: 0.04613871}
   relativeRotation: {x: 51.62279, y: 316.8565, z: 4.9260817}
