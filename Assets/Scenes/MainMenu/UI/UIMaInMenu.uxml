@@ -1,0 +1,45 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/MainMenu/UI/UIMaInMenu.uss?fileID=7433441132597879392&amp;guid=cdf9d7d6afd38804f9450872ed415be6&amp;type=3#UIMaInMenu" />
+    <ui:VisualElement name="parent-container" style="flex-grow: 1; background-color: rgb(17, 126, 199);">
+        <ui:VisualElement name="main-menu-container" style="flex-grow: 1; justify-content: flex-end; align-items: flex-end; padding-right: 5%; padding-bottom: 5%; display: none;">
+            <ui:Label tabindex="-1" text="SinglePlayer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="singleplayer" class="menu-text" />
+            <ui:Label tabindex="-1" text="Multiplayer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="multiplayer" class="menu-text" />
+            <ui:Label tabindex="-1" text="Pengaturan" parse-escape-sequences="true" display-tooltip-when-elided="true" name="options" class="menu-text" />
+            <ui:Label tabindex="-1" text="Keluar" parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit" class="menu-text" />
+        </ui:VisualElement>
+        <ui:VisualElement name="multiplayer-menu-container" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-color: rgb(17, 126, 199); padding-top: 100px; padding-right: 100px; padding-bottom: 100px; padding-left: 100px; display: flex; top: -2px; left: 0;">
+            <ui:Label tabindex="-1" text="Multiplayer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="title" style="font-size: 80px; color: rgb(255, 255, 255); -unity-font-style: bold; -unity-text-align: upper-center; margin-bottom: 50px;" />
+            <ui:VisualElement name="multiplayer-container" style="background-color: rgba(247, 247, 247, 0.57); padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; flex-grow: 1; justify-content: flex-start; align-items: center;">
+                <ui:VisualElement name="text-only" style="flex-grow: 1; display: none; align-items: center; justify-content: center; -unity-text-align: middle-center; align-self: stretch;">
+                    <ui:Label tabindex="-1" text="Membuat Host...." parse-escape-sequences="true" display-tooltip-when-elided="true" name="text" style="font-size: 60px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="lobby-container" style="flex-grow: 1; align-self: stretch; padding-top: 31px; padding-right: 31px; padding-bottom: 31px; padding-left: 31px;">
+                    <ui:VisualElement name="client-code" style="flex-grow: 0; display: flex; flex-direction: row; justify-content: center; margin-bottom: 25px;">
+                        <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: flex-start;">
+                            <ui:TextField picking-mode="Ignore" label="Masukan Kode: " value="Kode" name="textfield-client-code" class="textfield-client-code" />
+                            <ui:Button text="OK" parse-escape-sequences="true" display-tooltip-when-elided="true" name="button-submit-code" style="align-self: center; font-size: 40px; width: 111px; -unity-font-style: bold;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 0; align-self: center; flex-direction: row;">
+                            <ui:Label tabindex="-1" text="Tambah Lobi" parse-escape-sequences="true" display-tooltip-when-elided="true" name="to-add-loby" class="lobby-tool-text" style="margin-right: 20px;" />
+                            <ui:Label text="Muat Ulang" name="refresh-button" class="lobby-tool-text" style="font-size: 30px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="list-loby" style="flex-grow: 1;">
+                        <ui:ListView name="list-loby-container" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="container-add-lobby" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0; right: 0; bottom: 0; padding-right: 20%; padding-left: 20%; padding-top: 5%; flex-grow: 1; display: flex; background-color: rgba(82, 70, 70, 0.64);">
+                        <ui:VisualElement name="container" style="flex-grow: 0; background-color: rgba(199, 199, 199, 0.9);">
+                            <ui:Label tabindex="-1" text="Tambah Lobi" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; font-size: 65px; -unity-font-style: bold; margin-top: 20px;" />
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: center; margin-top: 106px; margin-bottom: 147px;">
+                                <ui:TextField picking-mode="Ignore" label="Nama Lobi: " name="textfield-name-add-loby" class="textfield-client-code" />
+                                <ui:Button text="OK" parse-escape-sequences="true" display-tooltip-when-elided="true" name="button-add-loby" style="align-self: center; font-size: 40px; width: 111px; -unity-font-style: bold;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label tabindex="-1" text="Keluar" parse-escape-sequences="true" display-tooltip-when-elided="true" name="add-lobby-exit-button" style="position: absolute; padding-top: 20px; padding-left: 30px; -unity-font-style: normal; font-size: 29px;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Label tabindex="-1" text="Keluar" parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit-multiplayer-menu" style="position: absolute; left: 20px; top: 22px; font-size: 40px; color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
