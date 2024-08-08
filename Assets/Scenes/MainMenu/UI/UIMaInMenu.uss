@@ -54,3 +54,7 @@
     font-size: 30px;
     color: rgb(255, 255, 255);
 }
+
+.unity-list-view__empty-label {
+    display: none;
+}

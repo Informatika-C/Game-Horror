@@ -9,8 +9,8 @@ public class UIStateManager : MonoBehaviour
 
     public void CreateAllState()
     {
-        _uiMainMenuState = new UIMainMenuState().SetUIMainMenu(uiMainMenu);
-        _uiMultiplayerState = new UIMultiplayerState().SetUIMainMenu(uiMainMenu);
+        _uiMainMenuState = new UIMainMenuState(uiMainMenu);
+        _uiMultiplayerState = new UIMultiplayerState(uiMainMenu);
     }
 
     public void SetUIMainMenu(UIMainMenu uiMainMenu)

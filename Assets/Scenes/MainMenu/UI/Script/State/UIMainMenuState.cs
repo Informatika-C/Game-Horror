@@ -3,32 +3,39 @@ using UnityEngine;
 
 public class UIMainMenuState : UIState
 {
-    UIMainMenu uiMainMenu;    
+    readonly UIMainMenu uiMainMenu;    
     VisualElement root;
     VisualElement singlePlayerButton;
     VisualElement multiplayerButton;
     VisualElement settingsButton;
     VisualElement quitButton;
 
-    public override UIState SetUIMainMenu(UIMainMenu uiMainMenu)
+    public UIMainMenuState(UIMainMenu uiMainMenu)
     {
         this.uiMainMenu = uiMainMenu;
-        return this;
+        UIInitialization();
+        SetEventHandlers();
     }
 
-    public override void OnEnter()
+    private void UIInitialization()
     {
         root = uiMainMenu.uiDocument.rootVisualElement;
         singlePlayerButton = root.Q<VisualElement>("singleplayer");
         multiplayerButton = root.Q<VisualElement>("multiplayer");
         settingsButton = root.Q<VisualElement>("options");
         quitButton = root.Q<VisualElement>("exit");
+    }
 
+    private void SetEventHandlers()
+    {
         singlePlayerButton.RegisterCallback<ClickEvent>(ev => OnSinglePlayerButtonClicked());
         multiplayerButton.RegisterCallback<ClickEvent>(ev => OnMultiplayerButtonClicked());
         settingsButton.RegisterCallback<ClickEvent>(ev => OnSettingsButtonClicked());
         quitButton.RegisterCallback<ClickEvent>(ev => OnQuitButtonClicked());
+    }
 
+    public override void OnEnter()
+    {
         RenderView();
     }
 

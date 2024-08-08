@@ -25,9 +25,9 @@
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="list-loby" style="flex-grow: 1;">
-                        <ui:ListView name="list-loby-container" />
+                        <ui:ListView name="list-loby-container" style="display: flex;" />
                     </ui:VisualElement>
-                    <ui:VisualElement name="container-add-lobby" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0; right: 0; bottom: 0; padding-right: 20%; padding-left: 20%; padding-top: 5%; flex-grow: 1; display: flex; background-color: rgba(82, 70, 70, 0.64);">
+                    <ui:VisualElement name="container-add-lobby" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0; right: 0; bottom: 0; padding-right: 20%; padding-left: 20%; padding-top: 5%; flex-grow: 1; display: none; background-color: rgba(82, 70, 70, 0.64);">
                         <ui:VisualElement name="container" style="flex-grow: 0; background-color: rgba(199, 199, 199, 0.9);">
                             <ui:Label tabindex="-1" text="Tambah Lobi" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; font-size: 65px; -unity-font-style: bold; margin-top: 20px;" />
                             <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: center; margin-top: 106px; margin-bottom: 147px;">

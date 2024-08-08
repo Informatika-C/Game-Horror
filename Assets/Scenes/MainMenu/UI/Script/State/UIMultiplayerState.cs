@@ -1,69 +1,146 @@
 using UnityEngine.UIElements;
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using R3;
+using Unity.Services.Lobbies.Models;
 
 public class UIMultiplayerState : UIState
 {
-    UIMainMenu uiMainMenu;    
+    readonly UIMainMenu uiMainMenu;    
     VisualElement root;
     VisualTreeAsset lobbyComponent;
     ListView lobbyList;
     VisualElement multiplayerContainer;
     VisualElement refreshButton;
-    VisualElement addLobbyButton;
+    VisualElement openAddLobbyButton;
     VisualElement exitButton;
-    List<LobbyData> items = new List<LobbyData>();
+    TextField addLobby;
+    Button addLobbyButton;
+    TextField findLobbyByCode;
+    Button findLobbyButton;
+    readonly List<Lobby> items = new();
     private bool isAddLobbyContainerOpen = false;
+    LobbyFacade lobbyFacade;
 
-    public override UIState SetUIMainMenu(UIMainMenu uiMainMenu)
+    private async Task InitializationAsync()
     {
-        this.uiMainMenu = uiMainMenu;
-        return this;
+        lobbyFacade ??= new LobbyFacade();
+        await lobbyFacade.InitializeAsync();
     }
 
-    private void Initialization()
+    public UIMultiplayerState(UIMainMenu uiMainMenu)
+    {
+        this.uiMainMenu = uiMainMenu;
+        UIInitialization();
+        SetEventHandlers();
+    }
+
+    private void UIInitialization()
     {
         root = uiMainMenu.uiDocument.rootVisualElement;
         lobbyComponent = uiMainMenu.lobbyComponent;
         multiplayerContainer = root.Q<VisualElement>("multiplayer-menu-container");
         lobbyList = multiplayerContainer.Q<ListView>("list-loby-container");
-        addLobbyButton = multiplayerContainer.Q<VisualElement>("to-add-loby");
+        openAddLobbyButton = multiplayerContainer.Q<VisualElement>("to-add-loby");
         refreshButton = multiplayerContainer.Q<VisualElement>("refresh-button");
+        addLobby = multiplayerContainer.Q<TextField>("textfield-name-add-loby");
+        addLobbyButton = multiplayerContainer.Q<Button>("button-add-loby");
+        findLobbyByCode = multiplayerContainer.Q<TextField>("textfield-client-code");
+        findLobbyButton = multiplayerContainer.Q<Button>("button-submit-code");
         exitButton = multiplayerContainer.Q<VisualElement>("exit-multiplayer-menu");
     }
 
     private void SetEventHandlers()
     {
-        addLobbyButton.RegisterCallback<ClickEvent>(ev => SetAddLobbyContainer(true));
+        openAddLobbyButton.RegisterCallback<ClickEvent>(ev => SetOpenAddLobbyContainer(true));
         refreshButton.RegisterCallback<ClickEvent>(ev => OnEnter());
+        addLobbyButton.RegisterCallback<ClickEvent>(ev => OnAddLobbyButtonClicked());
+        findLobbyButton.RegisterCallback<ClickEvent>(ev => OnFindLobbyButtonClicked());
         exitButton.RegisterCallback<ClickEvent>(ev => OnExitButtonClicked());
     }
 
-    public override void OnEnter()
+    private void OnFindLobbyButtonClicked()
     {
-        Initialization();
-        SetEventHandlers();
+        if (string.IsNullOrEmpty(findLobbyByCode.value)) return;
+        JoinToLobbyServerByCode(findLobbyByCode.value);
+    }
+
+    private void JoinToLobbyServerByCode(string lobbyCode)
+    {
+        Observable<Lobby> observable = lobbyFacade.JoinLobbyByCode(lobbyCode);
+        ShowText("Bergabung dengan lobby...");
+        observable.Subscribe(lobby =>
+        {
+            OnEnter();
+        },
+        async error =>
+        {
+            ShowText("Tidak dapat bergabung dengan lobby: " + error.Message);
+            await Task.Delay(2000);
+            OnEnter();
+        },_ => {});
+    }
+
+    private void OnAddLobbyButtonClicked()
+    {
+        if (string.IsNullOrEmpty(addLobby.value)) return;
+        AddLobbyToServer(addLobby.value);
+    }
+
+    private void AddLobbyToServer(string lobbyName)
+    {
+        Observable<Lobby> observable = lobbyFacade.CreateLobbyObservable(lobbyName);
+        ShowText("Menambahkan lobby...");
+        observable.Subscribe(lobby =>
+        {
+            OnEnter();
+        },
+        async error =>
+        {
+            ShowText("Tidak dapat menambahkan lobby");
+            await Task.Delay(2000);
+            OnEnter();
+        },_ => {});
+    }
+
+    public override async void OnEnter()
+    {
+        await InitializationAsync();
         ResetState();
-        uiMainMenu.StartCoroutine(LoadLobbyData());
+        RenderView();
+        LoadLobbyFromServer();
+    }
+
+    private Observable<QueryResponse> LoadLobbyFromServer()
+    {
+        Observable<QueryResponse> observable = lobbyFacade.QueryLobbiesObservable();
+        ShowText("Memuat data...");
+        observable.Subscribe(response =>
+        {
+            items.Clear();
+            response.Results.ForEach(lobby =>
+            {
+                items.Add(lobby);
+            });
+            LoadListView();
+        },
+        async error =>
+        {
+            ShowText("Tidak dapat memuat data");
+            await Task.Delay(2000);
+            LoadListView();
+        },_ => {});
+
+        return observable;
     }
 
     private void ResetState()
     {
         items.Clear();
         lobbyList.Clear();
-        SetAddLobbyContainer(false);
-    }
-
-    private IEnumerator LoadLobbyData()
-    {
-        RenderView();
-        yield return uiMainMenu.StartCoroutine(RenderText("Loading Lobby Data", 2.0f));
-        items.Add(new LobbyData { lobbyId = "1", lobbyName = "Lobby 1", currentPlayers = "1", maxPlayers = "4" });
-        items.Add(new LobbyData { lobbyId = "2", lobbyName = "Lobby 2", currentPlayers = "2", maxPlayers = "4" });
-        items.Add(new LobbyData { lobbyId = "3", lobbyName = "Lobby 3", currentPlayers = "3", maxPlayers = "4" });
-        items.Add(new LobbyData { lobbyId = "4", lobbyName = "Lobby 4", currentPlayers = "4", maxPlayers = "4" });
-        LoadListView();
+        SetOpenAddLobbyContainer(false);
+        addLobby.value = "";
+        findLobbyByCode.value = "";
     }
 
     private void LoadListView()
@@ -75,13 +152,38 @@ public class UIMultiplayerState : UIState
         lobbyList.makeItem = () => lobbyComponent.CloneTree();
         lobbyList.bindItem = (element, i) =>
         {
-            var label = element.Q<Label>();
             var lobbyData = items[i];
-            label.text = lobbyData.lobbyName;
+
+            var name = element.Q<Label>("lobby-name");
+            name.text = lobbyData.Name;
+            var playerCount = element.Q<Label>("player-count");
+            playerCount.text = lobbyData.Players.Count + " / " + lobbyData.MaxPlayers;
+            var lobbyCode = element.Q<Label>("lobby-code");
+            lobbyCode.text = lobbyData.LobbyCode;
+            var joinButton = element.Q<Button>("button-joint-loby");
+            joinButton.RegisterCallback<ClickEvent>(ev => JoinToLobbyServer(lobbyData.Id));
         };
 
         lobbyList.fixedItemHeight = 200;
         ShowLobbyContainer();
+    }
+
+    private Observable<Lobby> JoinToLobbyServer(string lobbyId)
+    {
+        Observable<Lobby> observable = lobbyFacade.JoinLobbyObservable(lobbyId);
+        ShowText("Bergabung dengan lobby...");
+        observable.Subscribe(lobby =>
+        {
+            OnEnter();
+        },
+        async error =>
+        {
+            ShowText("Tidak dapat bergabung dengan lobby: " + error.Message);
+            await Task.Delay(2000);
+            OnEnter();
+        },_ => {});
+    
+        return observable;
     }
 
     private void OnExitButtonClicked()
@@ -90,28 +192,22 @@ public class UIMultiplayerState : UIState
         uiMainMenu.uiStateManager.SetState(uiState);
     }
 
-    private void SetAddLobbyContainer(bool value)
+    private void SetOpenAddLobbyContainer(bool value)
     {
         isAddLobbyContainerOpen = value;
         VisualElement container = multiplayerContainer.Q<VisualElement>("multiplayer-container");
-        VisualElement addLobbyContainer = container.Q<VisualElement>("container-add-lobby");
-        VisualElement exitButton = addLobbyContainer.Q<VisualElement>("add-lobby-exit-button");
-        exitButton.RegisterCallback<ClickEvent>(ev => SetAddLobbyContainer(false));
+        VisualElement openAddLobbyContainer = container.Q<VisualElement>("container-add-lobby");
+        VisualElement exitButton = openAddLobbyContainer.Q<VisualElement>("add-lobby-exit-button");
+        exitButton.RegisterCallback<ClickEvent>(ev => SetOpenAddLobbyContainer(false));
         
         if (isAddLobbyContainerOpen)
         {
-            addLobbyContainer.style.display = DisplayStyle.Flex;
+            openAddLobbyContainer.style.display = DisplayStyle.Flex;
         }
         else
         {
-            addLobbyContainer.style.display = DisplayStyle.None;
+            openAddLobbyContainer.style.display = DisplayStyle.None;
         }
-    }
-
-    private IEnumerator RenderText(string text, float duration)
-    {
-        ShowText(text);
-        yield return new WaitForSeconds(duration);
     }
 
     private void ShowLobbyContainer()
@@ -153,12 +249,4 @@ public class UIMultiplayerState : UIState
 
     public override void OnUpdate()
     {}
-}
-
-public class LobbyData
-{
-    public string lobbyId;
-    public string lobbyName;
-    public string currentPlayers;
-    public string maxPlayers;
 }

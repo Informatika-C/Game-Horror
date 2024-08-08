@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.unity.animation.rigging": "1.2.1",
+    "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
     "com.unity.burst": "1.8.17",
     "com.unity.cinemachine": "2.9.7",
     "com.unity.collab-proxy": "2.4.3",
@@ -9,6 +9,7 @@
     "com.unity.multiplayer.tools": "1.1.1",
     "com.unity.netcode.gameobjects": "1.8.1",
     "com.unity.probuilder": "5.2.2",
+    "com.unity.services.lobby": "1.2.2",
     "com.unity.services.relay": "1.1.1",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.6",
